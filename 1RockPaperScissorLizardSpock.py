@@ -8,12 +8,12 @@ from tkinter import filedialog
 import csv
 
 # global score variables
-# wins losses ties gamesplayed winpercent
+# wins losses ties gamesPlayed winPercent
 win = 0
 loss = 0
 tie = 0
-gamesplayed = 0
-winpercent = 0
+gamesPlayed = 0
+winPercent = 0
 
 # to decides the winner
 # called by Rock, Paper, Scissors, Lizard or Spock buttons
@@ -23,8 +23,8 @@ def game(player):
     global win
     global loss
     global tie
-    global gamesplayed
-    global winpercent
+    global gamesPlayed
+    global winPercent
 
     # getting the computers choice
     cpu = ['Rock', 'Paper', 'Scissors', 'Lizard', 'Spock']
@@ -37,25 +37,27 @@ def game(player):
         result = 'Lost'
     else:
         result = 'Won'
-
+    
+    # increment ties, losses and games played
     if result == 'Tied':
         tie += 1
-        gamesplayed += 1
+        gamesPlayed += 1
     elif result == 'Lost':
         loss += 1
-        gamesplayed += 1
+        gamesPlayed += 1
     else:
         win += 1
-        gamesplayed += 1
+        gamesPlayed += 1
+        
     # calculate the win percent    
-    winpercent = int(win)/int(gamesplayed)*100
-    won = str(round(winpercent, 1))
+    winPercent = int(win)/int(gamesPlayed)*100
+    won = str(round(winPercent, 1))
     
     # updated to display the last rounds results and scores
-    lbl_result['text'] = f'You {result}! You played {player}, the computer played {cpu}.'
-    lbl_score['text'] = f'Score:\nYou: {win}\nComputer: {loss}\nTies: {tie}'
-    lbl_gamesplayed['text'] = f'You have played {gamesplayed} games.'
-    lbl_winpercent['text'] = f'Win Percent: {won}' + '%'
+    lbl_result['text'] = f'You {result}!\nYou played {player}, the computer played {cpu}.'
+    lbl_score['text'] = f'Score\nGame You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
+    lbl_gamesPlayed['text'] = f'You have played {gamesPlayed} games.'
+    lbl_winPercent['text'] = f'Win Percent: {won}' + '%'
 
  
  # save function
@@ -65,7 +67,7 @@ def savebox():
                                  (("text files","*.txt"),("all files","*.*")))
     if f is None:
         return
-    f.write(f'{win},{loss},{tie},{gamesplayed},{winpercent}')
+    f.write(f'{win},{loss},{tie},{gamesPlayed},{winPercent}')
 
  # load game function
  # called by load toolbar button
@@ -73,8 +75,8 @@ def load():
     global win
     global loss
     global tie
-    global gamesplayed
-    global winpercent
+    global gamesPlayed
+    global winPercent
 
     s = filedialog.askopenfilename(initialdir = "/desktop",title = "Select file",filetypes = \
                                    (("text files","*.txt"),("all files","*.*")))
@@ -82,36 +84,35 @@ def load():
         csv_reader = csv.reader(file, delimiter=',')
         for data in csv_reader:
             data = [float(x) for x in data]
-
     win = int(data[0])
     loss = int(data[1])
     tie = int(data[2])
-    gamesplayed = int(data[3])
-    winpercent = data[4]
+    gamesPlayed = int(data[3])
+    winPercent = round(data[4], 1)
     file.close()
-    lbl_score['text'] = f'Score:\nYou: {win}\nComputer: {loss}\nTies: {tie}'
-    lbl_result['text'] = 'Good Luck!'
-    lbl_gamesplayed['text'] = f'Games Played: {gamesplayed}'
-    lbl_winpercent['text'] = f'Win Percent: {winpercent}' + '%'
+    lbl_score['text'] = f'Score\nGame You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
+    lbl_result['text'] = 'Have Fun!'
+    lbl_gamesPlayed['text'] = f'Games Played: {gamesPlayed}'
+    lbl_winPercent['text'] = f'Win Percent: {winPercent}' + '%'
     
 # resets the score, called by the reset toolbar button thingy
-# sets win loss tie gamesplayed and winpercent to zero then updates the labels
+# sets win loss tie gamesPlayed and winPercent to zero then updates the labels
 def reset():
     global win
     global loss
     global tie
-    global gamesplayed
-    global winpercent
+    global gamesPlayed
+    global winPercent
     win = 0
     loss = 0
     tie = 0
-    gamesplayed = 0
-    winpercent = 0
+    gamesPlayed = 0
+    winPercent = 0
     
-    lbl_score['text'] = f'Score:\nYou: {win}\nComputer: {loss}\nTies: {tie}'
-    lbl_result['text'] = 'Good Luck!'
-    lbl_gamesplayed['text'] = f'Games Played: {gamesplayed}'
-    lbl_winpercent['text'] = f'Win Percent: {winpercent}' + '%'
+    lbl_score['text'] = f'Score\nGame You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
+    lbl_result['text'] = 'Have Fun!\nGet Ready to Play!'
+    lbl_gamesPlayed['text'] = f'Games Played: {gamesPlayed}'
+    lbl_winPercent['text'] = f'Win Percent: {winPercent}' + '%'
 
 # configure and update the clock
 def update_clock():
@@ -122,7 +123,7 @@ def update_clock():
 # set the gui
 root = Tk()
 
-# window properties
+# window properties - size and where to open
 root.wm_geometry("600x300-500+400")
 root.wm_title("Rock Paper Scissors Lizard Spock")
 
@@ -144,17 +145,17 @@ bottomframe.pack(side=BOTTOM)
 lbl_title = Label(topframe, text='Rock Paper Scissors Lizard Spock', font=('Courier New', 20, 'bold'))
 lbl_title.pack()
 
-lbl_result = Label(topframe, text='Good Luck!', font=('Comic Sans MS', 10, 'bold'))
+lbl_result = Label(topframe, text='Have Fun!\nGet Ready to Play!', font=('Comic Sans MS', 10, 'bold'))
 lbl_result.pack()
 
-lbl_score = Label(topframe, text='Score:\nYou: 0\nComputer: 0\nTies: 0', font=('Comic Sans MS', 10, 'bold'))
+lbl_score = Label(topframe, text='Score\nGame You Won: 0\nGames Computer Won: 0\nTies: 0', font=('Comic Sans MS', 10, 'bold'))
 lbl_score.pack()
 
-lbl_gamesplayed = Label(topframe, text='Games Played: 0', font=('Comic Sans MS', 10, 'bold'))
-lbl_gamesplayed.pack()
+lbl_gamesPlayed = Label(topframe, text='Games Played: 0', font=('Comic Sans MS', 10, 'bold'))
+lbl_gamesPlayed.pack()
 
-lbl_winpercent = Label(topframe, text='Win Percent: 0' + '%', font=('Comic Sans MS', 10, 'bold'))
-lbl_winpercent.pack()
+lbl_winPercent = Label(topframe, text='Win Percent: 0' + '%', font=('Comic Sans MS', 10, 'bold'))
+lbl_winPercent.pack()
 
 
 # buttons, Rock, Paper, Scissors, Lizard and Spock
@@ -178,7 +179,7 @@ lbl_blank = Label(bottomframe, text='')
 lbl_blank.grid(row=1)
 
 # configure and place the clock
-clock = Label(text="", fg="Black", font=("Comic Sans", 9, 'bold'))
+clock = Label(text="", fg="Black", font=("Comic Sans", 8, 'bold'))
 clock.pack(side=BOTTOM)
 update_clock()
       
