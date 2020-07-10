@@ -3,8 +3,9 @@ from tkinter import *
 import random
 import time
 from tkinter import filedialog
+from tkinter import messagebox
 #from tkinter import ttk
-#import os
+import os
 import csv
 
 # global score variables
@@ -91,7 +92,7 @@ def load():
     winPercent = round(data[4], 1)
     file.close()
     lbl_score['text'] = f'Score\nGame You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
-    lbl_result['text'] = 'Have Fun!'
+    lbl_result['text'] = 'Have Fun!\nGet Ready to Play!'
     lbl_gamesPlayed['text'] = f'Games Played: {gamesPlayed}'
     lbl_winPercent['text'] = f'Win Percent: {winPercent}' + '%'
     
@@ -119,6 +120,9 @@ def update_clock():
         now = time.strftime("%I:%M:%S %p \n%A %b %d, %Y")
         clock.configure(text=now)
         root.after(1000, update_clock)
+
+def aboutmessage():
+    m = messagebox.showinfo('About Rock Paper Scissor Lizard Spock', 'This game was developed by: Walter Oh Brian, and I hope you enjoy playing it as much as I enjoyed writing it.\n\n\nCopyright: \xa9 2020')
         
 # set the gui
 root = Tk()
@@ -128,13 +132,19 @@ root.wm_geometry("600x300-500+400")
 root.wm_title("Rock Paper Scissors Lizard Spock")
 
 # adding the toolbar
-menu = Menu(root)
-root.config(menu=menu)
-menu.add_command(label='Save', command=savebox)
-menu.add_command(label='Load', command=load)
-menu.add_command(label='Reset', command=reset)
-menu.add_cascade(label='Exit', command=root.destroy)
+menubar = Menu(root)
+filemenu = Menu(menubar, tearoff=0)
+filemenu.add_command(label='Save', command=savebox)
+filemenu.add_command(label='Load', command=load)
+filemenu.add_command(label='Reset', command=reset)
+filemenu.add_separator()
+filemenu.add_command(label='Exit', command=root.destroy)
+menubar.add_cascade(label='File', menu=filemenu)
 
+helpmenu = Menu(menubar, tearoff=0)
+helpmenu.add_command(label='About...', command=aboutmessage)
+menubar.add_cascade(label='Help', menu=helpmenu)
+    
 # cutting window into two frames
 topframe = Frame(root)
 topframe.pack()
@@ -182,5 +192,6 @@ lbl_blank.grid(row=1)
 clock = Label(text="", fg="Black", font=("Comic Sans", 8, 'bold'))
 clock.pack(side=BOTTOM)
 update_clock()
-      
+ 
+root.config(menu=menubar)     
 root.mainloop()
