@@ -119,26 +119,29 @@ def reset():
 def update_clock():
         now = time.strftime("%I:%M:%S %p \n%A %b %d, %Y")
         clock.configure(text=now)
-        root.after(1000, update_clock)
+        window.after(1000, update_clock)
 
 def aboutmessage():
-    m = messagebox.showinfo('About Rock Paper Scissor Lizard Spock', 'This game was developed by: Walter Oh Brian, and I hope you enjoy playing it as much as I enjoyed writing it.\n\n\nCopyright: \xa9 2020')
+    m = messagebox.showinfo('About Rock Paper Scissor Lizard Spock', 'This game was developed by: BLW. I hope you enjoy playing it as much as I enjoyed writing it.\n\n\nCopyright: \xa9 2020')
         
 # set the gui
-root = Tk()
+window = Tk()
 
 # window properties - size and where to open
-root.wm_geometry("600x300-500+400")
-root.wm_title("Rock Paper Scissors Lizard Spock")
+window.geometry("600x300-700+400")
+window.title("Rock Paper Scissors Lizard Spock")
 
-# adding the toolbar
-menubar = Menu(root)
+# prevent the window from being resized
+window.resizable(0, 0)
+
+# adding the menubar
+menubar = Menu(window)
 filemenu = Menu(menubar, tearoff=0)
 filemenu.add_command(label='Save', command=savebox)
 filemenu.add_command(label='Load', command=load)
 filemenu.add_command(label='Reset', command=reset)
 filemenu.add_separator()
-filemenu.add_command(label='Exit', command=root.destroy)
+filemenu.add_command(label='Exit', command=window.destroy)
 menubar.add_cascade(label='File', menu=filemenu)
 
 helpmenu = Menu(menubar, tearoff=0)
@@ -146,9 +149,9 @@ helpmenu.add_command(label='About...', command=aboutmessage)
 menubar.add_cascade(label='Help', menu=helpmenu)
     
 # cutting window into two frames
-topframe = Frame(root)
+topframe = Frame(window)
 topframe.pack()
-bottomframe = Frame(root)
+bottomframe = Frame(window)
 bottomframe.pack(side=BOTTOM)
 
 # text, the title the result and the score
@@ -188,10 +191,13 @@ btn_spock.grid(row=0, column=4, padx=(20, 20))
 lbl_blank = Label(bottomframe, text='')
 lbl_blank.grid(row=1)
 
+
+
+
 # configure and place the clock
 clock = Label(text="", fg="Black", font=("Comic Sans", 8, 'bold'))
 clock.pack(side=BOTTOM)
 update_clock()
  
-root.config(menu=menubar)     
-root.mainloop()
+window.config(menu=menubar)     
+window.mainloop()
