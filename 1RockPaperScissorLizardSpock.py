@@ -54,13 +54,50 @@ def game(player):
     winPercent = int(win)/int(gamesPlayed)*100
     won = str(round(winPercent, 1))
     
+    # added the funny sayings to go with the choices
+    sayings = {
+        1: "Rock crushes Lizard",
+        2: "Scissors cuts Paper",
+        3: "Paper covers Rock",
+        4: "Lizard Poisons Spock",
+        5: "Spock smashes Scissors",
+        6: "Scissors decapitates Lizard",
+        7: "Lizard eats Paper",
+        8: "Paper disproves Spock",
+        9: "Spock vaporizes Rock",
+        10: "Rock crushes Scissors",
+        11: "Tie Game!"} 
+    
+    if (player == 'Rock' and cpu == 'Lizard') or (cpu == 'Rock' and player == 'Lizard'):
+        display = sayings[1]
+    elif (player == 'Scissors' and cpu == 'Paper') or (cpu == 'Scissors' and player == 'Paper'):
+        display = sayings[2]
+    elif (player == 'Paper' and cpu == 'Rock') or (cpu == 'Paper' and player == 'Rock'):
+        display = sayings[3]
+    elif (player == 'Lizard' and cpu == 'Spock') or (cpu == 'Lizard' and player == 'Spock'):
+        display = sayings[4]
+    elif (player == 'Spock' and cpu == 'Scissors') or (cpu == 'Spock' and player == 'Scissors'):
+        display = sayings[5]
+    elif (player == 'Scissors' and cpu == 'Lizard') or (cpu == 'Scissors' and player == 'Lizard'):
+        display = sayings[6]
+    elif (player == 'Lizard' and cpu == 'Paper') or (cpu == 'Lizard' and player == 'Paper'):
+        display = sayings[7]
+    elif (player == 'Paper' and cpu == 'Spock') or (cpu == 'Paper' and player == 'Spock'):
+        display = sayings[8]
+    elif (player == 'Spock' and cpu == 'Rock') or (cpu == 'Spock' and player == 'Rock'):
+        display = sayings[9]
+    elif (player == 'Rock' and cpu == 'Scissors') or (cpu == 'Rock' and player == 'Scissors'):
+        display = sayings[10]
+    else:
+        display = sayings[11]   
+ 
     # updated to display the last rounds results and scores
     lbl_result['text'] = f'You {result}!\nYou played {player}, the computer played {cpu}.'
+    lbl_sayings['text'] = f'{display}'
     lbl_score['text'] = f'Score\nGame You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
     lbl_gamesPlayed['text'] = f'You have played {gamesPlayed} games.'
     lbl_winPercent['text'] = f'Win Percent: {won}' + '%'
-
- 
+    
  # save function
  # called by save button in the toolbar
 def savebox():
@@ -112,6 +149,7 @@ def reset():
     
     lbl_score['text'] = f'Score\nGame You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
     lbl_result['text'] = 'Have Fun!\nGet Ready to Play!'
+    lbl_sayings['text'] = ''
     lbl_gamesPlayed['text'] = f'Games Played: {gamesPlayed}'
     lbl_winPercent['text'] = f'Win Percent: {winPercent}' + '%'
 
@@ -122,13 +160,13 @@ def update_clock():
         window.after(1000, update_clock)
 
 def aboutmessage():
-    m = messagebox.showinfo('About Rock Paper Scissor Lizard Spock', 'This game was developed by: BLW. I hope you enjoy playing it as much as I enjoyed writing it.\n\n\nCopyright: \xa9 2020')
+    messagebox.showinfo('About Rock Paper Scissor Lizard Spock', 'This game was developed by: BLW. I hope you enjoy playing it as much as I enjoyed writing it.\n\n\nCopyright: \xa9 2020')
         
 # set the gui
 window = Tk()
 
 # window properties - size and where to open
-window.geometry("600x300-700+400")
+window.geometry("650x350-700+400")
 window.title("Rock Paper Scissors Lizard Spock")
 
 # prevent the window from being resized
@@ -161,6 +199,9 @@ lbl_title.pack()
 lbl_result = Label(topframe, text='Have Fun!\nGet Ready to Play!', font=('Comic Sans MS', 10, 'bold'))
 lbl_result.pack()
 
+lbl_sayings = Label(topframe, text='', fg='Red', font=('Comic Sans MS', 10, 'bold'))
+lbl_sayings.pack()
+
 lbl_score = Label(topframe, text='Score\nGame You Won: 0\nGames Computer Won: 0\nTies: 0', font=('Comic Sans MS', 10, 'bold'))
 lbl_score.pack()
 
@@ -190,8 +231,6 @@ btn_spock.grid(row=0, column=4, padx=(20, 20))
 # making blank space at bottom of window
 lbl_blank = Label(bottomframe, text='')
 lbl_blank.grid(row=1)
-
-
 
 
 # configure and place the clock
