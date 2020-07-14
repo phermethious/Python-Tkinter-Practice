@@ -16,6 +16,7 @@ tie = 0
 gamesPlayed = 0
 winPercent = 0
 
+
 # to decides the winner
 # called by Rock, Paper, Scissors, Lizard or Spock buttons
 # player choice either Rock, Paper, Scissors, Lizard or Spock.
@@ -56,16 +57,16 @@ def game(player):
     
     # added the funny sayings to go with the choices
     sayings = {
-        1: "Rock crushes Lizard",
-        2: "Scissors cuts Paper",
-        3: "Paper covers Rock",
-        4: "Lizard Poisons Spock",
-        5: "Spock smashes Scissors",
-        6: "Scissors decapitates Lizard",
-        7: "Lizard eats Paper",
-        8: "Paper disproves Spock",
-        9: "Spock vaporizes Rock",
-        10: "Rock crushes Scissors",
+        1: "Rock crushes Lizard...",
+        2: "Scissors cuts Paper...",
+        3: "Paper covers Rock...",
+        4: "Lizard Poisons Spock...",
+        5: "Spock smashes Scissors...",
+        6: "Scissors decapitates Lizard...",
+        7: "Lizard eats Paper...",
+        8: "Paper disproves Spock...",
+        9: "Spock vaporizes Rock...",
+        10: "Rock crushes Scissors...",
         11: "Tie Game!"} 
     
     if (player == 'Rock' and cpu == 'Lizard') or (cpu == 'Rock' and player == 'Lizard'):
@@ -92,7 +93,7 @@ def game(player):
         display = sayings[11]   
  
     # updated to display the last rounds results and scores
-    lbl_result['text'] = f'You {result}!\nYou played {player}, the computer played {cpu}.'
+    lbl_result['text'] = f'You {result}! You played {player}, the computer played {cpu}.'
     lbl_sayings['text'] = f'{display}'
     lbl_score['text'] = f'Score\nGame You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
     lbl_gamesPlayed['text'] = f'You have played {gamesPlayed} games.'
@@ -101,11 +102,11 @@ def game(player):
  # save function
  # called by save button in the toolbar
 def savebox():
-    f = filedialog.asksaveasfile(mode='w', initialdir = "/desktop", title = "Select file", filetypes = \
+    saveFile = filedialog.asksaveasfile(mode='w', initialdir = "/desktop", title = "Select file", filetypes = \
                                  (("text files","*.txt"),("all files","*.*")))
-    if f is None:
+    if saveFile is None:
         return
-    f.write(f'{win},{loss},{tie},{gamesPlayed},{winPercent}')
+    saveFile.write(f'{win},{loss},{tie},{gamesPlayed},{winPercent}')
 
  # load game function
  # called by load toolbar button
@@ -116,9 +117,9 @@ def load():
     global gamesPlayed
     global winPercent
 
-    s = filedialog.askopenfilename(initialdir = "/desktop",title = "Select file",filetypes = \
+    loadFile = filedialog.askopenfilename(initialdir = "/desktop",title = "Select file",filetypes = \
                                    (("text files","*.txt"),("all files","*.*")))
-    with open(s, mode='r') as file:
+    with open(loadFile, mode='r') as file:
         csv_reader = csv.reader(file, delimiter=',')
         for data in csv_reader:
             data = [float(x) for x in data]
@@ -128,12 +129,12 @@ def load():
     gamesPlayed = int(data[3])
     winPercent = round(data[4], 1)
     file.close()
-    lbl_score['text'] = f'Score\nGame You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
-    lbl_result['text'] = 'Have Fun!\nGet Ready to Play!'
+    lbl_score['text'] = f'Score\nGames You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
+    #lbl_result['text'] = 'I Hope You have Fun!\nGet Ready to Play!'
     lbl_gamesPlayed['text'] = f'Games Played: {gamesPlayed}'
     lbl_winPercent['text'] = f'Win Percent: {winPercent}' + '%'
     
-# resets the score, called by the reset toolbar button thingy
+# resets the score, called by the reset toolbar button
 # sets win loss tie gamesPlayed and winPercent to zero then updates the labels
 def reset():
     global win
@@ -147,8 +148,8 @@ def reset():
     gamesPlayed = 0
     winPercent = 0
     
-    lbl_score['text'] = f'Score\nGame You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
-    lbl_result['text'] = 'Have Fun!\nGet Ready to Play!'
+    lbl_score['text'] = f'Score\nGames You Won: {win}\nGames Computer Won: {loss}\nTies: {tie}'
+    lbl_result['text'] = 'I Hope You have Fun Playing!'
     lbl_sayings['text'] = ''
     lbl_gamesPlayed['text'] = f'Games Played: {gamesPlayed}'
     lbl_winPercent['text'] = f'Win Percent: {winPercent}' + '%'
@@ -164,6 +165,9 @@ def aboutmessage():
         
 # set the gui
 window = Tk()
+
+#change icon
+#window.iconbitmap(r'ENTER PATH TO ICON')
 
 # window properties - size and where to open
 window.geometry("650x350-700+400")
@@ -192,17 +196,17 @@ topframe.pack()
 bottomframe = Frame(window)
 bottomframe.pack(side=BOTTOM)
 
-# text, the title the result and the score
+# text, title, result, sayings, score gamesPlayed and winPercent
 lbl_title = Label(topframe, text='Rock Paper Scissors Lizard Spock', font=('Courier New', 20, 'bold'))
 lbl_title.pack()
 
-lbl_result = Label(topframe, text='Have Fun!\nGet Ready to Play!', font=('Comic Sans MS', 10, 'bold'))
+lbl_result = Label(topframe, text='I Hope You have Fun Playing!', font=('Comic Sans MS', 10, 'bold'))
 lbl_result.pack()
 
 lbl_sayings = Label(topframe, text='', fg='Red', font=('Comic Sans MS', 10, 'bold'))
 lbl_sayings.pack()
 
-lbl_score = Label(topframe, text='Score\nGame You Won: 0\nGames Computer Won: 0\nTies: 0', font=('Comic Sans MS', 10, 'bold'))
+lbl_score = Label(topframe, text='Score\nGames You Won: 0\nGames Computer Won: 0\nTies: 0', font=('Comic Sans MS', 10, 'bold'))
 lbl_score.pack()
 
 lbl_gamesPlayed = Label(topframe, text='Games Played: 0', font=('Comic Sans MS', 10, 'bold'))
@@ -210,7 +214,6 @@ lbl_gamesPlayed.pack()
 
 lbl_winPercent = Label(topframe, text='Win Percent: 0' + '%', font=('Comic Sans MS', 10, 'bold'))
 lbl_winPercent.pack()
-
 
 # buttons, Rock, Paper, Scissors, Lizard and Spock
 btn_rock = Button(bottomframe, text='Rock', bg='grey', command=lambda: game('Rock'))
@@ -231,7 +234,6 @@ btn_spock.grid(row=0, column=4, padx=(20, 20))
 # making blank space at bottom of window
 lbl_blank = Label(bottomframe, text='')
 lbl_blank.grid(row=1)
-
 
 # configure and place the clock
 clock = Label(text="", fg="Black", font=("Comic Sans", 8, 'bold'))
