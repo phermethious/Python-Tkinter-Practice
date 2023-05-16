@@ -1,3 +1,4 @@
+#5/16/2023
 # rpsls game with gui
 from tkinter import *
 import random
@@ -35,7 +36,11 @@ def game(player):
     # see who won by comparing picks
     if player == cpu:
         result = 'Tied'
-    elif (player == 'Rock' and cpu == 'Paper') or (player == 'Paper' and cpu == 'Scissors') or (player == 'Scissors' and cpu == 'Rock') or (player == 'Rock' and cpu == 'Spock') or (player == 'Paper' and cpu == 'Lizard') or (player == 'Scissors' and cpu == 'Spock') or (player == 'Lizard' and cpu == 'Rock') or (player == 'Lizard' and cpu == 'Scissors') or (player == 'Spock' and cpu == 'Paper') or (player == 'Spock' and cpu == 'Lizard'):
+    elif (player == 'Rock' and cpu == 'Paper') or (player == 'Paper' and cpu == 'Scissors') or \
+    (player == 'Scissors' and cpu == 'Rock') or (player == 'Rock' and cpu == 'Spock') or \
+    (player == 'Paper' and cpu == 'Lizard') or (player == 'Scissors' and cpu == 'Spock') or \
+    (player == 'Lizard' and cpu == 'Rock') or (player == 'Lizard' and cpu == 'Scissors') or \
+    (player == 'Spock' and cpu == 'Paper') or (player == 'Spock' and cpu == 'Lizard'):
         result = 'Lost'
     else:
         result = 'Won'
@@ -161,7 +166,8 @@ def update_clock():
         window.after(1000, update_clock)
 
 def aboutmessage():
-    messagebox.showinfo('About Rock Paper Scissor Lizard Spock', 'This game was developed by: BLW. I hope you enjoy playing it as much as I enjoyed writing it.\n\n\nCopyright: \xa9 2020')
+    messagebox.showinfo('About Rock Paper Scissor Lizard Spock', 'This game was developed by: BLW. I hope you \
+    enjoy playing it as much as I enjoyed writing it.\n\n\nCopyright: \xa9 2023')
         
 # set the gui
 window = Tk()
@@ -206,7 +212,8 @@ lbl_result.pack()
 lbl_sayings = Label(topframe, text='', fg='Red', font=('Comic Sans MS', 10, 'bold'))
 lbl_sayings.pack()
 
-lbl_score = Label(topframe, text='Score\nGames You Won: 0\nGames Computer Won: 0\nTies: 0', font=('Comic Sans MS', 10, 'bold'))
+lbl_score = Label(topframe, text='Score\nGames You Won: 0\nGames Computer Won: 0\nTies: 0', \
+                  font=('Comic Sans MS', 10, 'bold'))
 lbl_score.pack()
 
 lbl_gamesPlayed = Label(topframe, text='Games Played: 0', font=('Comic Sans MS', 10, 'bold'))
